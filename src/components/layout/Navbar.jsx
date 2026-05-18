@@ -63,6 +63,16 @@ export default function Navbar() {
               {isDark ? <Sun size={18} /> : <Moon size={18} />}
             </button>
 
+             <a
+              href="https://google.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`p-2 rounded-xl transition-all duration-300 ${isDark ? 'hover:bg-white/10 text-gray-300' : 'hover:bg-gray-100 text-gray-600'}`}
+              aria-label="Go to Google"
+            >
+              <Calculator size={18} />
+            </a>
+
             {/* Auth */}
             {isLoggedIn ? (
               <div className="hidden md:flex items-center gap-2">
