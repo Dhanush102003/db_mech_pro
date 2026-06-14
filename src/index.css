@@ -193,3 +193,211 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+@keyframes flowParticle {
+  0% { transform: translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateX(var(--flow-distance, 200px)); opacity: 0; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes oilFlow {
+  0% { stroke-dashoffset: 20; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes pistonExtend {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(var(--stroke, 60px)); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes gridPulse {
+  0%, 100% { opacity: 0.03; }
+  50% { opacity: 0.08; }
+}
+
+@keyframes neonPulse {
+  0%, 100% { box-shadow: 0 0 5px var(--neon-color, #00e5ff), 0 0 10px var(--neon-color, #00e5ff); }
+  50% { box-shadow: 0 0 15px var(--neon-color, #00e5ff), 0 0 30px var(--neon-color, #00e5ff), 0 0 45px var(--neon-color, #00e5ff); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@layer components {
+  .simulator-canvas {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 80px);
+    overflow: hidden;
+    background: var(--color-surface-dark);
+  }
+  body.light .simulator-canvas {
+    background: #f1f5f9;
+  }
+
+  .circuit-grid {
+    background-image:
+      linear-gradient(rgba(0, 229, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 229, 255, 0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  body.light .circuit-grid {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  }
+
+  .floating-panel {
+    position: absolute;
+    background: rgba(10, 14, 26, 0.92);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(0, 229, 255, 0.12);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+  }
+  body.light .floating-panel {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  .component-palette-item {
+    padding: 8px 10px;
+    border-radius: 10px;
+    cursor: grab;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .component-palette-item:hover {
+    background: rgba(0, 229, 255, 0.08);
+    border-color: rgba(0, 229, 255, 0.2);
+    transform: translateX(4px);
+  }
+  body.light .component-palette-item:hover {
+    background: rgba(0, 184, 212, 0.08);
+    border-color: rgba(0, 184, 212, 0.2);
+  }
+  .component-palette-item:active {
+    cursor: grabbing;
+  }
+
+  .component-preview-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: rgba(0, 229, 255, 0.06);
+    border: 1px solid rgba(0, 229, 255, 0.12);
+  }
+  body.light .component-preview-icon {
+    background: rgba(0, 184, 212, 0.06);
+    border-color: rgba(0, 184, 212, 0.12);
+  }
+
+  .canvas-placing {
+    cursor: crosshair !important;
+  }
+  .drag-ghost {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.7;
+    transform: translate(-50%, -50%);
+  }
+
+  .sim-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: rgba(10, 14, 26, 0.85);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 229, 255, 0.1);
+  }
+  body.light .sim-toolbar {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .sim-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid rgba(100, 116, 139, 0.2);
+    background: transparent;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+  }
+  .sim-btn:hover {
+    background: rgba(0, 229, 255, 0.1);
+    color: #00e5ff;
+    border-color: rgba(0, 229, 255, 0.3);
+  }
+  .sim-btn.active {
+    background: rgba(0, 229, 255, 0.15);
+    color: #00e5ff;
+    border-color: #00e5ff;
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.2);
+  }
+  body.light .sim-btn {
+    color: #64748b;
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+  body.light .sim-btn:hover {
+    background: rgba(0, 184, 212, 0.08);
+    color: #0088aa;
+  }
+
+  .neon-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    --neon-color: #00e5ff;
+    background: rgba(0, 229, 255, 0.1);
+    color: #00e5ff;
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    animation: neonPulse 3s ease-in-out infinite;
+  }
+  .neon-badge.pink {
+    --neon-color: #ff4081;
+    background: rgba(255, 64, 129, 0.1);
+    color: #ff4081;
+    border-color: rgba(255, 64, 129, 0.3);
+  }
+
+  .page-transition-enter {
+    animation: scaleIn 0.3s ease-out;
+  }
+}
