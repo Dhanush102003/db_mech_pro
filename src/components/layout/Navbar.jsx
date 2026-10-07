@@ -73,9 +73,7 @@ export default function Navbar() {
               {isDark ? <Sun size={18} /> : <Moon size={18} />}
             </button>
 
-          
-
-{/* Right side - Excel */}
+{/* Excel Button */}
 <div className="flex items-center mr-4">
   <a
     href="https://docs.google.com/spreadsheets/d/1zn2scuRsu1p-57HoxPsTVWcju_uMjGF3/edit?usp=sharing&ouid=112065794432412324846&rtpof=true&sd=true"
