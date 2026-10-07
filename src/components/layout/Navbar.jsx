@@ -1,10 +1,19 @@
+```jsx
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
-import { Sun, Moon, Menu, X, LogOut, User, Calculator } from 'lucide-react';
+import {
+  Sun,
+  Moon,
+  Menu,
+  X,
+  LogOut,
+  User,
+  Calculator,
+  FileSpreadsheet
+} from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FileSpreadsheet } from "lucide-react";
 
 export default function Navbar() {
   const { isDark, toggle } = useTheme();
@@ -21,31 +30,43 @@ export default function Navbar() {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass" style={{ backdropFilter: 'blur(20px)' }}>
+    <nav
+      className="fixed top-0 left-0 right-0 z-50 glass"
+      style={{ backdropFilter: 'blur(20px)' }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
+
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-accent)] flex items-center justify-center group-hover:shadow-lg group-hover:shadow-[var(--color-primary)]/20 transition-all duration-300">
               <Calculator size={18} className="text-white" />
             </div>
+
             <span className="text-xl font-bold font-[var(--font-display)] tracking-tight">
               <span className="glow-text">Mech</span>
-              <span className={isDark ? 'text-white' : 'text-gray-900'}>Calc</span>
-              <span className="text-[var(--color-accent)] text-sm ml-0.5 font-semibold">PRO</span>
+              <span className={isDark ? 'text-white' : 'text-gray-900'}>
+                Calc
+              </span>
+              <span className="text-[var(--color-accent)] text-sm ml-0.5 font-semibold">
+                PRO
+              </span>
             </span>
           </Link>
 
           {/* Desktop Links */}
           <div className="hidden md:flex items-center gap-1">
-            {links.map(link => (
+            {links.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300
-                  ${isActive(link.to)
-                    ? 'text-[var(--color-primary)] bg-[var(--color-primary)]/10'
-                    : isDark ? 'text-gray-300 hover:text-white hover:bg-white/5' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                  ${
+                    isActive(link.to)
+                      ? 'text-[var(--color-primary)] bg-[var(--color-primary)]/10'
+                      : isDark
+                      ? 'text-gray-300 hover:text-white hover:bg-white/5'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                   }`}
               >
                 {link.label}
@@ -53,64 +74,87 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Right side */}
+          {/* Right Side */}
           <div className="flex items-center gap-3">
+
             {/* Theme Toggle */}
             <button
               onClick={toggle}
-              className={`p-2 rounded-xl transition-all duration-300 ${isDark ? 'hover:bg-white/10 text-gray-300' : 'hover:bg-gray-100 text-gray-600'}`}
+              className={`p-2 rounded-xl transition-all duration-300 ${
+                isDark
+                  ? 'hover:bg-white/10 text-gray-300'
+                  : 'hover:bg-gray-100 text-gray-600'
+              }`}
               aria-label="Toggle theme"
             >
               {isDark ? <Sun size={18} /> : <Moon size={18} />}
             </button>
 
-          
-
-{/* Right side - Excel */}
-<div className="flex items-center mr-4">
-  <a
-    href="https://docs.google.com/spreadsheets/d/1zn2scuRsu1p-57HoxPsTVWcju_uMjGF3/edit?usp=sharing&ouid=112065794432412324846&rtpof=true&sd=true
-    target="_blank""
-    rel="noopener noreferrer"
-    className="flex items-center gap-2 px-3 py-2 rounded-xl
-               text-green-600 hover:bg-green-50
-               transition-all duration-300"
-    aria-label="Open Excel"
-  >
-    <FileSpreadsheet size={18} />
-    <span>Excel</span>
-  </a>
-</div>
-
-
-             
-
-            
+            {/* Excel Button */}
+            <a
+              href="https://docs.google.com/spreadsheets/d/1zn2scuRsu1p-57HoxPsTVWcju_uMjGF3/edit?usp=sharing&ouid=112065794432412324846&rtpof=true&sd=true"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`flex items-center gap-2 px-3 py-2 rounded-xl transition-all duration-300 ${
+                isDark
+                  ? 'text-green-400 hover:bg-green-500/10'
+                  : 'text-green-600 hover:bg-green-50'
+              }`}
+              aria-label="Open Excel"
+            >
+              <FileSpreadsheet size={18} />
+              <span className="hidden sm:inline">Excel</span>
+            </a>
 
             {/* Auth */}
             {isLoggedIn ? (
               <div className="hidden md:flex items-center gap-2">
-                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-sm ${isDark ? 'bg-white/5 text-gray-300' : 'bg-gray-100 text-gray-700'}`}>
+
+                <div
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-sm ${
+                    isDark
+                      ? 'bg-white/5 text-gray-300'
+                      : 'bg-gray-100 text-gray-700'
+                  }`}
+                >
                   <User size={14} />
                   <span className="font-medium">{user.name}</span>
                 </div>
-                <button onClick={logout} className={`p-2 rounded-xl transition-all ${isDark ? 'hover:bg-white/10 text-gray-400' : 'hover:bg-gray-100 text-gray-500'}`}>
+
+                <button
+                  onClick={logout}
+                  className={`p-2 rounded-xl transition-all ${
+                    isDark
+                      ? 'hover:bg-white/10 text-gray-400'
+                      : 'hover:bg-gray-100 text-gray-500'
+                  }`}
+                >
                   <LogOut size={16} />
                 </button>
+
               </div>
             ) : (
-              <Link to="/login" className="hidden md:block btn-primary text-sm py-2 px-5">
+              <Link
+                to="/login"
+                className="hidden md:block btn-primary text-sm py-2 px-5"
+              >
                 Login
               </Link>
             )}
 
-            {/* Mobile menu button */}
+            {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className={`md:hidden p-2 rounded-xl transition-all ${isDark ? 'hover:bg-white/10 text-gray-300' : 'hover:bg-gray-100 text-gray-600'}`}
+              className={`md:hidden p-2 rounded-xl transition-all ${
+                isDark
+                  ? 'hover:bg-white/10 text-gray-300'
+                  : 'hover:bg-gray-100 text-gray-600'
+              }`}
+              aria-label="Open menu"
             >
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
+
           </div>
         </div>
       </div>
@@ -125,24 +169,53 @@ export default function Navbar() {
             className="md:hidden glass border-t border-white/5"
           >
             <div className="px-4 py-4 space-y-2">
-              {links.map(link => (
+
+              {links.map((link) => (
                 <Link
                   key={link.to}
                   to={link.to}
                   onClick={() => setMobileOpen(false)}
                   className={`block px-4 py-3 rounded-xl text-sm font-medium transition-all
-                    ${isActive(link.to)
-                      ? 'text-[var(--color-primary)] bg-[var(--color-primary)]/10'
-                      : isDark ? 'text-gray-300 hover:bg-white/5' : 'text-gray-600 hover:bg-gray-100'
+                    ${
+                      isActive(link.to)
+                        ? 'text-[var(--color-primary)] bg-[var(--color-primary)]/10'
+                        : isDark
+                        ? 'text-gray-300 hover:bg-white/5'
+                        : 'text-gray-600 hover:bg-gray-100'
                     }`}
                 >
                   {link.label}
                 </Link>
               ))}
+
+              {/* Mobile Excel */}
+              <a
+                href="https://docs.google.com/spreadsheets/d/1zn2scuRsu1p-57HoxPsTVWcju_uMjGF3/edit?usp=sharing&ouid=112065794432412324846&rtpof=true&sd=true"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileOpen(false)}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium ${
+                  isDark
+                    ? 'text-green-400 hover:bg-white/5'
+                    : 'text-green-600 hover:bg-gray-100'
+                }`}
+              >
+                <FileSpreadsheet size={18} />
+                Open Excel
+              </a>
+
+              {/* Mobile Auth */}
               {isLoggedIn ? (
                 <button
-                  onClick={() => { logout(); setMobileOpen(false); }}
-                  className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium ${isDark ? 'text-gray-300 hover:bg-white/5' : 'text-gray-600 hover:bg-gray-100'}`}
+                  onClick={() => {
+                    logout();
+                    setMobileOpen(false);
+                  }}
+                  className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium ${
+                    isDark
+                      ? 'text-gray-300 hover:bg-white/5'
+                      : 'text-gray-600 hover:bg-gray-100'
+                  }`}
                 >
                   Logout ({user.name})
                 </button>
@@ -155,6 +228,7 @@ export default function Navbar() {
                   Login
                 </Link>
               )}
+
             </div>
           </motion.div>
         )}
@@ -162,3 +236,15 @@ export default function Navbar() {
     </nav>
   );
 }
+```
+
+The important fixes are:
+
+* ✅ Fixed the missing `"` after your Google Sheets URL.
+* ✅ Fixed the extra `"` after `target="_blank"`.
+* ✅ Combined your `lucide-react` imports.
+* ✅ Excel button works on desktop.
+* ✅ Excel button also appears in the mobile menu.
+* ✅ Clicking Excel opens your Google Sheet in a new tab.
+* ✅ Your existing theme/auth/navigation functionality is preserved.
+* ✅ No `navigate` functionality was removed from your original code.
