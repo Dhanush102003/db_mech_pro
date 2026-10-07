@@ -63,6 +63,42 @@ export default function Navbar() {
               {isDark ? <Sun size={18} /> : <Moon size={18} />}
             </button>
 
+            {/* Right side */}
+<div className="flex items-center gap-3 mr-4">
+
+  {/* Excel Button */}
+  <a
+    href="https://docs.google.com/spreadsheets/d/1zn2scuRsu1p-57HoxPsTVWcju_uMjGF3/edit?usp=sharing&ouid=112065794432412324846&rtpof=true&sd=true"
+    target="_blank"
+    rel="noopener noreferrer"
+    className={`flex items-center gap-2 px-3 py-2 rounded-xl
+      transition-all duration-300
+      ${
+        isDark
+          ? "text-green-400 hover:bg-green-500/10"
+          : "text-green-600 hover:bg-green-50"
+      }`}
+    aria-label="Open Excel"
+  >
+    <FileSpreadsheet size={18} />
+    <span className="hidden sm:inline">Excel</span>
+  </a>
+
+  {/* Theme Toggle */}
+  <button
+    onClick={toggle}
+    className={`p-2 rounded-xl transition-all duration-300 ${
+      isDark
+        ? "hover:bg-white/10 text-gray-300"
+        : "hover:bg-gray-100 text-gray-600"
+    }`}
+    aria-label="Toggle theme"
+  >
+    {isDark ? <Sun size={18} /> : <Moon size={18} />}
+  </button>
+
+</div>
+
 
              
 
