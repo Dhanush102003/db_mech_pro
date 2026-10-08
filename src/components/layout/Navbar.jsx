@@ -83,7 +83,7 @@ export default function Navbar() {
     aria-label="Open Excel"
   >
     <FileSpreadsheet size={18} />
-    <span>Excel</span>
+    <span>Feedback_Form 🙋</span>
   </a>
 </div>
 
